@@ -228,9 +228,10 @@ with c5:
     for col, name in [("ShareClass1","SC1_DD"),("ShareClass2","SC2_DD"),("Benchmark","BMK_DD")]:
         rm = df[col].cummax(); df[name] = (df[col] - rm) / rm * 100
     fig5 = go.Figure()
+    fill_colors = {"SC1": "rgba(88,166,255,0.1)", "SC2": "rgba(63,185,80,0.1)", "BMK": "rgba(240,136,62,0.1)"}
     for col, name, color in [("SC1_DD","SC1",C1),("SC2_DD","SC2",C2),("BMK_DD","BMK",CB)]:
         fig5.add_trace(go.Scatter(x=df["Date"], y=df[col], name=name,
-            fill="tozeroy", line=dict(color=color,width=1.5), fillcolor=color.replace("#","rgba(").rstrip(")")+",0.1)"))
+            fill="tozeroy", line=dict(color=color,width=1.5), fillcolor=fill_colors[name]))
     fig5.update_layout(**base("Drawdown from Peak (%)"))
     fig5.update_yaxes(ticksuffix="%")
     st.plotly_chart(fig5, use_container_width=True)
