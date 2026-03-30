@@ -57,19 +57,19 @@ def base(title=""):
 with st.sidebar:
     st.markdown("## 📈 Fund Dashboard")
     st.markdown("---")
-    uploaded = st.file_uploader("Upload your Excel file", type=["xlsx"])
+    uploaded = st.file_uploader("Upload your CSV file", type=["csv"])
     st.markdown("---")
     st.markdown("**Expected columns:**")
     st.markdown("`Date, ShareClass1, ShareClass2,`\n`Benchmark, SC1_Return, SC2_Return,`\n`Benchmark_Return`")
     st.markdown("---")
-    st.markdown("*Download the template below to get started.*")
+    st.markdown("*Save your Excel as CSV (File → Save As → CSV) before uploading.*")
 
 # ─────────────────────────────────────────────
 # LOAD DATA
 # ─────────────────────────────────────────────
 @st.cache_data
 def load_data(file_bytes):
-    df = pd.read_excel(io.BytesIO(file_bytes), header=1)   # row 2 = real headers
+    df = pd.read_csv(io.BytesIO(file_bytes))
     df.columns = df.columns.str.strip()
     # Rename last "Benchmark" column to Benchmark_Return if needed
     cols = list(df.columns)
